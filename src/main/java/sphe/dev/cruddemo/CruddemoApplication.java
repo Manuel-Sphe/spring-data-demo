@@ -24,6 +24,7 @@ public class CruddemoApplication {
 	public CommandLineRunner run(@Qualifier("studentDAOImp") StudentDAO studentDAO) throws Exception {
 		return runner-> {
 
+			//deleteStudent(studentDAO);
 			updateStudent(studentDAO);
 
 			//createStudent(studentDAO);
@@ -121,4 +122,18 @@ public class CruddemoApplication {
 		System.out.println(studentDAO.findById(student1.getId()));
 	}
 
+	private void deleteStudent(StudentDAO studentDAO) {
+		// Create a student
+		studentDAO.delete(UUID.fromString("a04869ae-8d1d-4cac-bbf1-85d9439c52e1"));
+
+		List<Student> students = studentDAO.findAll();
+
+		students.forEach((student -> {
+			UUID lesnar = UUID.fromString("252905cd-8200-4364-b418-d47b50b72ca4");
+			UUID cena = UUID.fromString("f176c83e-e967-47ef-b843-e2ef0d377cd0");
+			// Delete all students except Brock Lesnar and John Cena
+			if(!student.getId().equals(lesnar) && !student.getId().equals(cena))
+				studentDAO.delete(student.getId());
+		}));
+	}
 }
