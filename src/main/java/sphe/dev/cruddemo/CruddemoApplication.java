@@ -9,6 +9,7 @@ import sphe.dev.cruddemo.dao.StudentDAO;
 import sphe.dev.cruddemo.entity.Student;
 
 import java.util.List;
+import java.util.UUID;
 
 @SpringBootApplication
 public class CruddemoApplication {
@@ -22,12 +23,16 @@ public class CruddemoApplication {
 	@Bean
 	public CommandLineRunner run(@Qualifier("studentDAOImp") StudentDAO studentDAO) throws Exception {
 		return runner-> {
-			System.out.println("Hello World");
-			createStudent(studentDAO);
-			readStudent(studentDAO);
+
+			updateStudent(studentDAO);
+
+			//createStudent(studentDAO);
+			//readStudent(studentDAO);
 
 			readAllStudents(studentDAO);
-			readByName(studentDAO);
+			//readByName(studentDAO);
+
+
 
 		};
 	}
@@ -85,6 +90,35 @@ public class CruddemoApplication {
 		System.out.println("Printing the list of students -- Search by first and last name");
 		// Printing the list of students
 		listOfStudents.forEach(System.out::println);
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		// Create a student
+		Student oldStudent = studentDAO.findById(UUID.fromString("252905cd-8200-4364-b418-d47b50b72ca4"));
+
+
+
+		// Update the student
+		oldStudent.setFirstName("Brock");
+		oldStudent.setLastName("Lesnar");
+		oldStudent.setEmail("brocklesnar@wwe.com");
+
+		// Pass the updated student to the DAO
+		studentDAO.update(oldStudent);
+
+		// Print the updated student
+		System.out.println("Printing the updated student");
+		System.out.println(studentDAO.findById(UUID.fromString("252905cd-8200-4364-b418-d47b50b72ca4")));
+
+		Student student1 = studentDAO.findById(UUID.fromString("f176c83e-e967-47ef-b843-e2ef0d377cd0"));
+
+		student1.setFirstName("John");
+		student1.setLastName("Cena");
+		student1.setEmail("johncena12@wwe.com");
+
+		studentDAO.update(student1);
+		System.out.println("Printing the updated student");
+		System.out.println(studentDAO.findById(student1.getId()));
 	}
 
 }

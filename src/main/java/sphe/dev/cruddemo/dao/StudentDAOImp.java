@@ -45,4 +45,10 @@ public class StudentDAOImp implements StudentDAO {
         theQuery.setParameter("secondParam",firstName);
         return theQuery.getResultList();
     }
+
+    @Override
+    @Transactional
+    public void update(Student newStudentInfo){
+        entityManager.merge(newStudentInfo);
+    }
 }
