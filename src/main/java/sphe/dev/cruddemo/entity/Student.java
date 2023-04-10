@@ -34,5 +34,9 @@ public class Student {
         this.email = email;
     }
 
+    public String toString() {
+        return "Student: " + this.id +", "+this.firstName + ", " + this.lastName + ", " + this.email;
+    }
+
 
 }

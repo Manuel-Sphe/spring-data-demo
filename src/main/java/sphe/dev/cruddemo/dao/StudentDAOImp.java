@@ -1,10 +1,12 @@
 package sphe.dev.cruddemo.dao;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import sphe.dev.cruddemo.entity.Student;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -27,5 +29,20 @@ public class StudentDAOImp implements StudentDAO {
     @Override
     public Student findById(UUID id){
         return entityManager.find(Student.class,id);
+    }
+
+    @Override
+    public List<Student> findAll(){
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student",Student.class);
+        return theQuery.getResultList();
+    }
+
+    @Override
+    public List<Student> findByName(String lastName, String firstName ){
+        // Using JPA Query Language Name parameter to pass lastName and firstName Params
+        TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student WHERE lastName=:firstParam AND firstName=:secondParam",Student.class);
+        theQuery.setParameter("firstParam",lastName);
+        theQuery.setParameter("secondParam",firstName);
+        return theQuery.getResultList();
     }
 }
