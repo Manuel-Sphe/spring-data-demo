@@ -18,4 +18,6 @@ public interface StudentDAO {
 
     void delete(UUID id);
 
+    int deleteAll();
+
 }

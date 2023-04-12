@@ -24,17 +24,14 @@ public class CruddemoApplication {
 	public CommandLineRunner run(@Qualifier("studentDAOImp") StudentDAO studentDAO) throws Exception {
 		return runner-> {
 
-			//deleteStudent(studentDAO);
+			deleteStudent(studentDAO);
 			updateStudent(studentDAO);
 
-			//createStudent(studentDAO);
-			//readStudent(studentDAO);
+			createStudent(studentDAO);
+			readStudent(studentDAO);
 
 			readAllStudents(studentDAO);
-			//readByName(studentDAO);
-
-
-
+			
 		};
 	}
 
