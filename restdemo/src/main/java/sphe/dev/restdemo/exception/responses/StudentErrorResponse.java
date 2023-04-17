@@ -1,4 +1,4 @@
-package sphe.dev.restdemo.exception;
+package sphe.dev.restdemo.exception.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package sphe.dev.restdemo.exception;
+package sphe.dev.restdemo.exception.exceptions;
 
 public class StudentNotFoundException extends RuntimeException{
 

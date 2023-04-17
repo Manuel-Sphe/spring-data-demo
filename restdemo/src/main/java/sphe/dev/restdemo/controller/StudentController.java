@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.UUID;
 
 import sphe.dev.restdemo.entity.Student;
-import sphe.dev.restdemo.exception.StudentErrorResponse;
-import sphe.dev.restdemo.exception.StudentNotFoundException;
+import sphe.dev.restdemo.exception.exceptions.StudentNotFoundException;
+import sphe.dev.restdemo.exception.responses.StudentErrorResponse;
 
 @RestController
 @RequestMapping("/student")
@@ -37,16 +37,6 @@ public class StudentController {
         });
     }
 
-    @ExceptionHandler
-    public ResponseEntity<StudentErrorResponse> handleException(StudentNotFoundException exc){
-        StudentErrorResponse error = new StudentErrorResponse();
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setMessage(exc.getMessage());
-        error.setTimeStamp(System.currentTimeMillis());
-
-        return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
-    }
-    
     @GetMapping("all")
     public ResponseEntity<List<Student>> getAllStudent(){
         return new ResponseEntity<>(students, HttpStatus.OK);
