@@ -27,7 +27,7 @@ public class StudentRestExceptionHandler {
     public ResponseEntity<StudentErrorResponse> handleException(Exception exc){
         StudentErrorResponse error = new StudentErrorResponse();
         error.setStatus(HttpStatus.BAD_REQUEST.value());
-        error.setMessage("ERROR !!! This is Not a valid UUID");
+        error.setMessage(exc.getMessage());
         error.setTimeStamp(System.currentTimeMillis());
 
         return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);

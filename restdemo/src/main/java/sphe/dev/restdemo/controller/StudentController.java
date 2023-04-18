@@ -1,53 +1,62 @@
 package sphe.dev.restdemo.controller;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import jakarta.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
 
+import sphe.dev.restdemo.dao.StudentDAO;
 import sphe.dev.restdemo.entity.Student;
-import sphe.dev.restdemo.exception.exceptions.StudentNotFoundException;
-import sphe.dev.restdemo.exception.responses.StudentErrorResponse;
+import sphe.dev.restdemo.service.StudentService;
+
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/api")
 public class StudentController {
-  
-    public List<Student> students ;
-    public HashMap<UUID,Student> allData = new HashMap<>();
-    // run this first .
-    @PostConstruct
-    public void LoadData(){
-        this.students = new ArrayList<>();
 
+    private final StudentService studentService;
 
-        students.add(new Student(UUID.randomUUID(),"Sphe","Mnisi","sphemns@uwc.ac.za"));
-        students.add(new Student(UUID.randomUUID(), "Noluthando", "Jiyane", "noluthandogiyane@mut.ac.za"));
-        students.add(new Student(UUID.randomUUID(), "Ntokozo", "Femeni", "ntokofem@gamil.com"));
-
-        students.forEach((student)->{
-            allData.put(student.getId(),student);
-        });
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
-    @GetMapping("all")
+    @GetMapping("students")
     public ResponseEntity<List<Student>> getAllStudent(){
+        List<Student> students = studentService.findAll();
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
-    @GetMapping("{studentId}")
-    public ResponseEntity<Student> getStudent(@PathVariable UUID studentId){
-        Student student = allData.get(studentId);
-        if(student==null)
-          throw new StudentNotFoundException("Student id not found - "+studentId.toString());
+    @GetMapping("students/{studentId}")
+    public ResponseEntity<Student> getStudentById(@PathVariable UUID studentId){
+        Student student = studentService.findById(studentId);
         return new ResponseEntity<>(student,HttpStatus.OK);
+    }
+
+    @PostMapping("students")
+    public ResponseEntity<Student> addStudent(@RequestBody Student student){
+        studentService.saveStudent(student);
+        return new ResponseEntity<>(student, HttpStatus.CREATED);
+    }
+
+    @PutMapping("students/{studentId}")
+    public ResponseEntity<Student> updateStudent(@PathVariable UUID studentId, @RequestBody Student student){
+        Student std = studentService.findById(studentId);
+        std.setFirstName(student.getFirstName());
+        std.setLastName(student.getLastName());
+        std.setEmail(student.getEmail());
+        studentService.update(std);
+        return new ResponseEntity<>(std,HttpStatus.OK);
+    }
+
+    @DeleteMapping("students/{studentId}")
+    public ResponseEntity<?> deleteStudent(@PathVariable UUID studentId){
+        studentService.delete(studentId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
     
 }
