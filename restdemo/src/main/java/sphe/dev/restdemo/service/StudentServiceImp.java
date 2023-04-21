@@ -26,6 +26,7 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
+    @Transactional
     public void saveStudent(Student student) {
         studentDAO.saveStudent(student);
     }
@@ -40,11 +41,13 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
+    @Transactional
     public void update(Student newStudentInfo){
         studentDAO.update(newStudentInfo);
     }
 
     @Override
+    @Transactional
     public void delete(UUID id){
         studentDAO.delete(id);
     }

@@ -39,18 +39,17 @@ public class StudentController {
 
     @PostMapping("students")
     public ResponseEntity<Student> addStudent(@RequestBody Student student){
+        // Just incase they pass an id in JSON ... set id to null
+        student.setId(null);
         studentService.saveStudent(student);
         return new ResponseEntity<>(student, HttpStatus.CREATED);
     }
 
-    @PutMapping("students/{studentId}")
-    public ResponseEntity<Student> updateStudent(@PathVariable UUID studentId, @RequestBody Student student){
-        Student std = studentService.findById(studentId);
-        std.setFirstName(student.getFirstName());
-        std.setLastName(student.getLastName());
-        std.setEmail(student.getEmail());
-        studentService.update(std);
-        return new ResponseEntity<>(std,HttpStatus.OK);
+    @PutMapping("students/")
+    public ResponseEntity<Student> updateStudent(@RequestBody Student student){
+
+        studentService.update(student);
+        return new ResponseEntity<>(student,HttpStatus.OK);
     }
 
     @DeleteMapping("students/{studentId}")
@@ -58,5 +57,5 @@ public class StudentController {
         studentService.delete(studentId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+
 }

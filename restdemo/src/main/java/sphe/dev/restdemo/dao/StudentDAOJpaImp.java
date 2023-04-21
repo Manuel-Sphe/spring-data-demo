@@ -21,7 +21,6 @@ public class StudentDAOJpaImp implements  StudentDAO{
     }
 
     @Override
-    @Transactional
     public void saveStudent(Student student) {
         entityManager.persist(student);
     }
@@ -38,14 +37,12 @@ public class StudentDAOJpaImp implements  StudentDAO{
     }
 
     @Override
-    @Transactional
     public void update(Student newStudentInfo){
         entityManager.merge(newStudentInfo);
 
     }
 
     @Override
-    @Transactional
     public void delete(UUID id){
         Student student = entityManager.find(Student.class,id);
         entityManager.remove(student);
