@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.UUID;
 
 public interface StudentService {
+
+
     List<Student> findAll();
 
-    void saveStudent(Student student);
+    void save(Student student);
 
     Student findById(UUID id);
 
-    void update(Student newStudentInfo);
+    void updateStudent(Student newStudentInfo);
 
-    void delete(UUID id);
+    void deleteById(UUID id);
+
 }
