@@ -18,3 +18,4 @@ jobs:
         run : | # the pipe to run multiple commands 
           javac -version
           java -version   
+          node -v
