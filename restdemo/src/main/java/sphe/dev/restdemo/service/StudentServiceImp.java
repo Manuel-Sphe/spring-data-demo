@@ -26,14 +26,9 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
-<<<<<<< HEAD
-    @Transactional
-    public void saveStudent(Student student) {
-        studentDAO.saveStudent(student);
-=======
+
     public void save(Student student) {
         studentRepository.save(student);
->>>>>>> bdec945 (JpaRepository)
     }
 
     @Override
@@ -50,17 +45,11 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
-<<<<<<< HEAD
-    @Transactional
-    public void update(Student newStudentInfo){
-        studentDAO.update(newStudentInfo);
-    }
-=======
+
     public void updateStudent(Student newStudentInfo) {
         Optional<Student> res  =  studentRepository.findById(newStudentInfo.getId());
 
         Student theStudent  = null ;
->>>>>>> bdec945 (JpaRepository)
 
         if(res.isPresent())
             theStudent = res.get();
@@ -70,14 +59,8 @@ public class StudentServiceImp implements StudentService {
         studentRepository.save(theStudent);
     }
     @Override
-<<<<<<< HEAD
-    @Transactional
-    public void delete(UUID id){
-        studentDAO.delete(id);
-=======
     public void deleteById(UUID id){
         studentRepository.deleteById(id);
->>>>>>> bdec945 (JpaRepository)
     }
 
 

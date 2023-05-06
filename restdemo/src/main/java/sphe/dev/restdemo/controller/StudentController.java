@@ -35,25 +35,6 @@ public class StudentController {
         return new ResponseEntity<>(student,HttpStatus.OK);
     }
 
-    @PostMapping("students")
-    public ResponseEntity<Student> addStudent(@RequestBody Student student){
-<<<<<<< HEAD
-        // Just incase they pass an id in JSON ... set id to null
-        student.setId(null);
-        studentService.saveStudent(student);
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
-    }
-
-    @PutMapping("students/")
-    public ResponseEntity<Student> updateStudent(@RequestBody Student student){
-
-        studentService.update(student);
-        return new ResponseEntity<>(student,HttpStatus.OK);
-=======
-        studentService.save(student);
-        return new ResponseEntity<>(student, HttpStatus.CREATED);
-    }
-
     @PutMapping("students/{studentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable UUID studentId, @RequestBody Student student){
         Student std = studentService.findById(studentId);
@@ -64,7 +45,7 @@ public class StudentController {
         std.setEmail(student.getEmail());
         studentService.updateStudent(std);
         return new ResponseEntity<>(std,HttpStatus.OK);
->>>>>>> bdec945 (JpaRepository)
+
     }
 
     @DeleteMapping("students/{studentId}")
