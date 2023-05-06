@@ -16,6 +16,7 @@ jobs:
   
       - name : multiline script 
         run : | # the pipe to run multiple commands 
+          ls -a 
           javac -version
           java -version   
           echo The node version is : $(node -v)
