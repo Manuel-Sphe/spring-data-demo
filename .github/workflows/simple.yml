@@ -1,22 +1,25 @@
-# Name of our workflow 
-name : Shell Commands 
+name: Run Maven Test in restdemo
 
-#  Events
-
-on : [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  # name of the job
-  run-shell-command:
+  test:
     runs-on: ubuntu-latest
+
     steps:
-      # name of the step and the command
-      - name: echo a string
-        run : echo "Hello GitHub Actions"
-  
-      - name : multiline script 
-        run : | # the pipe to run multiple commands 
-          ls -a 
-          javac -version
-          java -version   
-          echo The node version is : $(node -v)
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '17'
+
+    - name: Build project
+      run: mvn -f restdemo/pom.xml clean install
+
+    - name: Run tests
+      run: mvn -f restdemo/pom.xml test
