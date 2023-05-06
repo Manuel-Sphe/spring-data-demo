@@ -19,6 +19,13 @@ jobs:
         java-version: '17'
         distribution : 'adopt'
 
+    - name: Set up environment
+      env:
+        DB_URL: jdbc:mysql://localhost:3306/student_tracker
+        DB_USERNAME: springstudent
+        DB_PASSWORD: springstudent
+      run: echo "Setting up environment variables"
+
     - name: Build project
       run: mvn -f restdemo/pom.xml clean install
 
