@@ -1,0 +1,20 @@
+# Name of our workflow 
+name : Shell Commands 
+
+#  Events
+
+on : [push]
+
+jobs:
+  # name of the job
+  run-shell-command:
+    runs-on: ubuntu-latest
+    steps:
+      # name of the step and the command
+      - name: echo a string
+        run : echo "Hello GitHub Actions"
+  
+      - name : multiline script 
+        run : | # the pipe to run multiple commands 
+          javac -version
+          java -version   
