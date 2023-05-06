@@ -17,20 +17,10 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '17'
-        distribution: 'adopt'
+        distribution : 'adopt'
 
     - name: Build project
       run: mvn -f restdemo/pom.xml clean install
 
     - name: Run tests
       run: mvn -f restdemo/pom.xml test
-
-      # Optional: specify additional arguments to mvn test command
-      # with:
-      #   args: -Dtest=my.package.MyTestClass#myTestMethod
-
-    - name: Upload test results
-      uses: actions/upload-artifact@v2
-      with:
-        name: test-results
-        path: restdemo/target/surefire-reports/
