@@ -1,4 +1,5 @@
 package sphe.dev.restdemo.controller;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,13 @@ public class StudentController {
         Student student = studentService.findById(studentId);
         return new ResponseEntity<>(student,HttpStatus.OK);
     }
+
+    @PostMapping("students")
+    public ResponseEntity<Student> addStudent(@Valid @RequestBody Student student){
+        studentService.saveStudent(student);
+        return new ResponseEntity<>(student,HttpStatus.CREATED);
+    }
+
 
     @PutMapping("students/{studentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable UUID studentId, @RequestBody Student student){

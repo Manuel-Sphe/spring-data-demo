@@ -2,9 +2,10 @@ package sphe.dev.restdemo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sphe.dev.restdemo.dao.StudentRepository;
+import sphe.dev.restdemo.exception.exceptions.BadRequestException;
+
+import sphe.dev.restdemo.repository.StudentRepository;
 import sphe.dev.restdemo.entity.Student;
-import sphe.dev.restdemo.exception.exceptions.StudentNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,11 +27,12 @@ public class StudentServiceImp implements StudentService {
     }
 
     @Override
-
-    public void save(Student student) {
+    public void saveStudent( Student student) {
+        Boolean existsEmail = studentRepository.selectExistsEmail(student.getEmail());
+        if(existsEmail)
+            throw new BadRequestException("Email "+student.getEmail()+" already exists");
         studentRepository.save(student);
     }
-
     @Override
     public Student findById(UUID id){
       Optional<Student> results = studentRepository.findById(id);

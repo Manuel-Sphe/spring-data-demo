@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import sphe.dev.restdemo.exception.exceptions.BadRequestException;
 import sphe.dev.restdemo.exception.exceptions.StudentNotFoundException;
 import sphe.dev.restdemo.exception.responses.StudentErrorResponse;
 
@@ -20,6 +21,16 @@ public class StudentRestExceptionHandler {
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
 
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<StudentErrorResponse> handleException(BadRequestException exception){
+        StudentErrorResponse error = new StudentErrorResponse();
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(exception.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     // Generic exception, if invalid uuid is passed

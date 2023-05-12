@@ -1,4 +1,4 @@
-package sphe.dev.restdemo.dao;
+package sphe.dev.restdemo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

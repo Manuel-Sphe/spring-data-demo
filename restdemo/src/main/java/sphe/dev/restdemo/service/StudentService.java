@@ -10,12 +10,17 @@ public interface StudentService {
 
     List<Student> findAll();
 
-    void save(Student student);
+    /**
+     * @param student
+     */
+    void saveStudent(Student student);
 
     Student findById(UUID id);
 
     void updateStudent(Student newStudentInfo);
 
     void deleteById(UUID id);
+
+
 
 }
