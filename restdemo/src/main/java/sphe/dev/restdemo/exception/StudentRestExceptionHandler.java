@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import sphe.dev.restdemo.exception.exceptions.BadRequestException;
+import sphe.dev.restdemo.exception.exceptions.BuyerNotException;
 import sphe.dev.restdemo.exception.exceptions.StudentNotFoundException;
+import sphe.dev.restdemo.exception.responses.BuyerErrorResponse;
 import sphe.dev.restdemo.exception.responses.StudentErrorResponse;
 
 @ControllerAdvice
@@ -42,5 +44,16 @@ public class StudentRestExceptionHandler {
         error.setTimeStamp(System.currentTimeMillis());
 
         return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<BuyerErrorResponse> handleException(BuyerNotException exception){
+        BuyerErrorResponse error = new BuyerErrorResponse();
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        error.setMessage(exception.getMessage());
+        error.setTimeStamp(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+
     }
 }

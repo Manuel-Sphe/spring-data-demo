@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 import sphe.dev.restdemo.entity.Student;
-import sphe.dev.restdemo.exception.exceptions.StudentNotFoundException;
 import sphe.dev.restdemo.service.StudentService;
 
 
@@ -46,8 +45,6 @@ public class StudentController {
     @PutMapping("students/{studentId}")
     public ResponseEntity<Student> updateStudent(@PathVariable UUID studentId, @RequestBody Student student){
         Student std = studentService.findById(studentId);
-        if(std==null)
-            throw new StudentNotFoundException("Can't update info of a non-existing student with that Id");
         std.setFirstName(student.getFirstName());
         std.setLastName(student.getLastName());
         std.setEmail(student.getEmail());
@@ -58,10 +55,7 @@ public class StudentController {
 
     @DeleteMapping("students/{studentId}")
     public ResponseEntity<?> deleteStudent(@PathVariable UUID studentId){
-        Student tempStudent = studentService.findById(studentId);
-        if(tempStudent == null)
-            throw new StudentNotFoundException("Sorry a student with that student is found");
-        studentService.deleteById(studentId);
+        studentService.delete(studentId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

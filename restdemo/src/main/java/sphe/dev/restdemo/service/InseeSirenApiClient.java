@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import sphe.dev.restdemo.configuration.InseeSirenApiClientConfig;
 
+import java.util.List;
 import java.util.Map;
 
 //insee.api.base-url =https://api.insee.fr/entreprises/sirene/V3
@@ -15,7 +16,5 @@ public interface InseeSirenApiClient {
 
     @GetMapping("/siret?q=denominationUniteLegale:\"{legalName}\" AND etablissementSiege:TRUE")
     Map<String,Object> getEntrepriseByLegalName(@PathVariable String legalName);
-
-
 
 }
