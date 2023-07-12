@@ -1,31 +1,22 @@
 package sphe.dev.restdemo.entity;
 
-import java.util.UUID;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
 
-@Data
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "student")
-public class Student {
+public class Student extends BaseEntity{
 
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "BINARY(16)")
-    private UUID id;
 
     @NotBlank(message = "First name is mandatory")
     @Column(name = "first_name", nullable = false)
@@ -39,15 +30,35 @@ public class Student {
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-
-    public Student(String firstName, String lastName, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
+    public String getFirstName() {
+        return firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    //prettier-ignore
     public String toString() {
-        return "Student: " + this.id +", "+this.firstName + ", " + this.lastName + ", " + this.email;
+        return "Student{ firstName='" +getFirstName()+"'"+
+                "lastName='"+getLastName()+"'"+
+                "email='"+getEmail()+"'"+
+                "}";
     }
 
 

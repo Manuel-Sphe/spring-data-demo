@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;
+import sphe.dev.restdemo.service.dto.StudentDTO;
 
 @Service
 public class StudentServiceImp implements StudentService {
@@ -23,6 +24,11 @@ public class StudentServiceImp implements StudentService {
     @Autowired
     public StudentServiceImp(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
+    }
+
+    @Override
+    public StudentDTO save(StudentDTO studentDTO) {
+        return null;
     }
 
     @Override
@@ -59,13 +65,7 @@ public class StudentServiceImp implements StudentService {
     }
     @Override
     public void delete(UUID id){
-        studentRepository.findById(id)
-                .ifPresentOrElse(student -> {
-                        studentRepository.deleteById(id);
-                            },
-                        () -> {
-                            throw new StudentNotFoundException("Can't delete a non-existing student with that ID");
-                        });
+        studentRepository.deleteById(id);
 
     }
 
